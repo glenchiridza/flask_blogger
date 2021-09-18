@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -39,6 +39,15 @@ all_posts = [
 
 @app.route('/posts', methods=['GET','POST'])
 def posts():
+
+    if request.method == "POST":
+        post_title = request.form['title']
+        post_content = request.form['content']
+        new_post = BlogPost(title=post_title,content=post_content,author="Glen")
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect('/posts')
+    all_posts = BlogPost.query.order_by(BlogPost.date_posted).all()
     return render_template('posts.html',posts=all_posts)
 
 
