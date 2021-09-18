@@ -8,10 +8,10 @@
 
 <hr>
 <h2>Edit Post</h2>
-<form action="/posts" method="POST">
-    Title: <input type="text" name="title" id="title" placeholder="Title">
+<form action="/posts/edit/{{post.id}}" method="POST">
+    Title: <input type="text" name="title" id="title" value="{{post.title}}">
     <br>
-    Post: <input type="text" name="content" id="content" placeholder="Content">
+    Post: <input type="text" name="content" id="content" value="{{post.content}}">
     <br>
     <input type="submit" value="Update">
 
