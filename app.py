@@ -12,11 +12,11 @@ class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    author = db.Column(db.String(30),nullable=False, default="N/A")
+    author = db.Column(db.String(30), nullable=False, default="N/A")
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
 
     def __repr__(self):
-        return "Blog Post"+ str(self.id)
+        return "Blog Post" + str(self.id)
 
 
 @app.route('/')
@@ -31,27 +31,31 @@ all_posts = [
     },
     {
         "title": "Post 2",
-        "author":"Glenc",
+        "author": "Glenc",
         "content": "This is content of post2"
     }
 ]
 
 
-@app.route('/posts', methods=['GET','POST'])
+@app.route('/posts', methods=['GET', 'POST'])
 def posts():
-
     if request.method == "POST":
         post_title = request.form['title']
         post_content = request.form['content']
-        new_post = BlogPost(title=post_title,content=post_content,author="Glen")
+        new_post = BlogPost(title=post_title, content=post_content, author="Glen")
         db.session.add(new_post)
         db.session.commit()
         return redirect('/posts')
     all_posts = BlogPost.query.order_by(BlogPost.date_posted).all()
-    return render_template('posts.html',posts=all_posts)
+    return render_template('posts.html', posts=all_posts)
+
 
 @app.route('/posts/delete/<int:id>')
-def delete():
+def delete(id):
+    post = BlogPost.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect('/posts')
 
 
 @app.route('/home/<string:name>')
