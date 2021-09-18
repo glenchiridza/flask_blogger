@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
@@ -36,7 +37,7 @@ all_posts = [
 ]
 
 
-@app.route('/posts')
+@app.route('/posts', methods=['GET','POST'])
 def posts():
     return render_template('posts.html',posts=all_posts)
 
