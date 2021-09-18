@@ -58,6 +58,13 @@ def delete(id):
     return redirect('/posts')
 
 
+@app.route('/posts/edit/<int:id>', methods=["GET", "POST"])
+def edit(id):
+    post = BlogPost.query.get_or_404(id)
+    post_title = post.title
+    post_content = post.content
+
+
 @app.route('/home/<string:name>')
 def hello(name):
     return "hello world " + name
