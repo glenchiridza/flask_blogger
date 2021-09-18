@@ -50,6 +50,9 @@ def posts():
     all_posts = BlogPost.query.order_by(BlogPost.date_posted).all()
     return render_template('posts.html',posts=all_posts)
 
+@app.route('/posts/delete/<int:id>')
+def delete():
+
 
 @app.route('/home/<string:name>')
 def hello(name):
