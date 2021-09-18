@@ -15,6 +15,7 @@ all_posts = [
     },
     {
         "title": "Post 2",
+        "author":"Glenc",
         "content": "This is content of post2"
     }
 ]
